@@ -15,16 +15,17 @@
 int main(int argc, char *argv[]) {
   /* Defining colors structure */
   vtkNew<vtkNamedColors> colors;
-  colors->SetColor("TrumpetColor", "#CC9900");
   colors->SetColor("DeskColor", "#663300");
+  colors->SetColor("TrumpetColor", "#CC9900");
   colors->SetColor("BackgroundColor", "#FFFFFF");
 
-  std::vector<vtkColor3d> colorsVector{colors->GetColor3d("TrumpetColor"),
-                                 colors->GetColor3d("DeskColor"),
-                                 colors->GetColor3d("BackgroundColor")};
+  std::vector<vtkColor3d> colorsVector{colors->GetColor3d("DeskColor"),
+                                       colors->GetColor3d("TrumpetColor"),
+                                       colors->GetColor3d("BackgroundColor")};
 
   /* Reading OBJ file */
-  std::vector<std::string> fileNames{"../trumpet.obj", "../desk.obj"};
+  std::vector<std::string> fileNames{"../desk.obj", "../trumpet.obj",
+                                     "../lamp.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -50,11 +51,24 @@ int main(int argc, char *argv[]) {
     vectorActor.emplace_back(std::move(actor));
   }
 
-  auto *coordinates = vectorActor[1]->GetCenter();
+  /* Moving desk */
+  vectorActor[0]->RotateY(180);
+
+  /* Moving trumpet */
+  auto *coordinates = vectorActor[0]->GetCenter();
+  coordinates[0] += 100;
   coordinates[1] += 540;
-  coordinates[2] += 100;
-  vectorActor[0]->SetPosition(coordinates);
-  vectorActor[0]->RotateZ(90);
+  coordinates[2] += 250;
+  vectorActor[1]->SetPosition(coordinates);
+  vectorActor[1]->RotateZ(90);
+
+  /* Moving lamp */
+  coordinates = vectorActor[0]->GetCenter();
+  coordinates[0] -= 450;
+  coordinates[1] += 480;
+  coordinates[2] -= 150;
+  vectorActor[2]->SetPosition(coordinates);
+  vectorActor[2]->RotateY(45);
 
   /* Rendering window */
   vtkNew<vtkRenderer> renderer;
