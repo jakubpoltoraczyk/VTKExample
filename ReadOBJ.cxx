@@ -17,15 +17,20 @@ int main(int argc, char *argv[]) {
   vtkNew<vtkNamedColors> colors;
   colors->SetColor("DeskColor", "#663300");
   colors->SetColor("TrumpetColor", "#CC9900");
+  colors->SetColor("LampColor", "#E0E0E0");
+  colors->SetColor("NotebookColor", "#C0C0C0");
+  colors->SetColor("GlassColor", "#F0FFFF");
   colors->SetColor("BackgroundColor", "#FFFFFF");
 
-  std::vector<vtkColor3d> colorsVector{colors->GetColor3d("DeskColor"),
-                                       colors->GetColor3d("TrumpetColor"),
-                                       colors->GetColor3d("BackgroundColor")};
+  std::vector<vtkColor3d> colorsVector{
+      colors->GetColor3d("DeskColor"), colors->GetColor3d("TrumpetColor"),
+      colors->GetColor3d("LampColor"), colors->GetColor3d("NotebookColor"),
+      colors->GetColor3d("GlassColor")};
 
   /* Reading OBJ file */
   std::vector<std::string> fileNames{"../desk.obj", "../trumpet.obj",
-                                     "../lamp.obj"};
+                                     "../lamp.obj", "../notebook.obj",
+                                     "../glass.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -55,20 +60,35 @@ int main(int argc, char *argv[]) {
   vectorActor[0]->RotateY(180);
 
   /* Moving trumpet */
+  vectorActor[1]->RotateZ(90);
   auto *coordinates = vectorActor[0]->GetCenter();
   coordinates[0] += 100;
   coordinates[1] += 540;
   coordinates[2] += 250;
   vectorActor[1]->SetPosition(coordinates);
-  vectorActor[1]->RotateZ(90);
 
   /* Moving lamp */
+  vectorActor[2]->RotateY(45);
   coordinates = vectorActor[0]->GetCenter();
-  coordinates[0] -= 450;
+  coordinates[0] -= 500;
   coordinates[1] += 480;
   coordinates[2] -= 150;
   vectorActor[2]->SetPosition(coordinates);
-  vectorActor[2]->RotateY(45);
+
+  /* Moving monitor */
+  vectorActor[3]->SetScale(180);
+  vectorActor[3]->RotateY(90);
+  coordinates = vectorActor[0]->GetCenter();
+  coordinates[1] += 500;
+  vectorActor[3]->SetPosition(coordinates);
+
+  /* Moving glass */
+  vectorActor[4]->SetScale(0.8);
+  coordinates = vectorActor[0]->GetCenter();
+  coordinates[0] -= 500;
+  coordinates[1] += 450;
+  coordinates[2] += 250;
+  vectorActor[4]->SetPosition(coordinates);
 
   /* Rendering window */
   vtkNew<vtkRenderer> renderer;
