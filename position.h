@@ -18,3 +18,5 @@ void customizePillPosition(vtkNew<vtkActor> & actor, double coordinates[]);
 void customizePillBottle(vtkNew<vtkActor> & actor, double coordinates[]);
 
 void customizeFloor(vtkNew<vtkActor> & actor, double coordinates[]);
+
+void customizeChair(vtkNew<vtkActor> & actor, double coordinates[]);

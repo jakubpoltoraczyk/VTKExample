@@ -56,6 +56,7 @@ int main(int argc, char *argv[]) {
   colors->SetColor("PillColorGreen", "#A0EAAB");
   colors->SetColor("PillBottle", "#FFFFFF");
   colors->SetColor("Floor", "#E1E5E5");
+  colors->SetColor("Chair", "#404747");
   colors->SetColor("BackgroundColor", "#FFFFFF");
 
   std::vector<vtkColor3d> colorsVector{colors->GetColor3d("DeskColor"),
@@ -70,7 +71,8 @@ int main(int argc, char *argv[]) {
                                        colors->GetColor3d("PillColorGreen"),
                                        colors->GetColor3d("PillColorRed"),
                                        colors->GetColor3d("PillBottle"),
-                                       colors->GetColor3d("Floor")};
+                                       colors->GetColor3d("Floor"),
+                                       colors->GetColor3d("Chair")};
 
   /**************************************************/
   /************** Reading OBJ files *****************/
@@ -82,7 +84,7 @@ int main(int argc, char *argv[]) {
       "../images/pill.obj",      "../images/pill.obj",
       "../images/pill.obj",      "../images/pill.obj",
       "../images/pill.obj",      "../images/pillbottle.obj",
-      "../images/floor.obj"};
+      "../images/floor.obj",     "../images/chair.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -128,6 +130,7 @@ int main(int argc, char *argv[]) {
   customizePillPosition(vectorActor[10], vectorActor[0]->GetCenter());
   customizePillBottle(vectorActor[11], vectorActor[0]->GetCenter());
   customizeFloor(vectorActor[12], vectorActor[0]->GetCenter());
+  customizeChair(vectorActor[13], vectorActor[0]->GetCenter());
 
   /**************************************************/
   /*************** Rendering window *****************/
