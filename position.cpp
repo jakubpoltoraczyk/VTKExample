@@ -89,7 +89,7 @@ void customizePillPosition(vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetPosition(coordinates);
 }
 
-void customizePillBottle(vtkNew<vtkActor> & actor, double coordinates[]){
+void customizePillBottle(vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(10);
   actor->RotateX(-90);
   coordinates[0] += 520;
@@ -98,9 +98,17 @@ void customizePillBottle(vtkNew<vtkActor> & actor, double coordinates[]){
   actor->SetPosition(coordinates);
 }
 
-void customizeFloor(vtkNew<vtkActor> & actor, double coordinates[]){
+void customizeFloor(vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(100);
   actor->RotateX(-90);
-  coordinates[1] -= 600;
+  coordinates[1] -= 590;
+  actor->SetPosition(coordinates);
+}
+
+void customizeChair(vtkNew<vtkActor> &actor, double coordinates[]) {
+  actor->SetScale(1.3);
+  actor->RotateY(180);
+  coordinates[1] -= 490;
+  coordinates[2] += 500;
   actor->SetPosition(coordinates);
 }
