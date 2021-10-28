@@ -8,11 +8,11 @@ void customizeDeskPosition(vtkNew<vtkActor> &actor, double coordinates[]) {
 }
 
 void customizeTrumpetPosition(vtkNew<vtkActor> &actor, double coordinates[]) {
-  actor->RotateZ(90);
-  coordinates[0] += 100;
-  // coordinates[1] += 540;
-  coordinates[1] -= 500;
-  coordinates[2] += 250;
+  actor->RotateX(90);
+  actor->RotateY(45);
+  coordinates[0] += 820;
+  coordinates[1] -= 190;
+  coordinates[2] += 780;
   actor->SetPosition(coordinates);
 }
 
@@ -95,5 +95,12 @@ void customizePillBottle(vtkNew<vtkActor> & actor, double coordinates[]){
   coordinates[0] += 520;
   coordinates[1] += 480;
   coordinates[2] += 60;
+  actor->SetPosition(coordinates);
+}
+
+void customizeFloor(vtkNew<vtkActor> & actor, double coordinates[]){
+  actor->SetScale(100);
+  actor->RotateX(-90);
+  coordinates[1] -= 600;
   actor->SetPosition(coordinates);
 }

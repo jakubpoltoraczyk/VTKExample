@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
   colors->SetColor("PillColorRed", "#E78686");
   colors->SetColor("PillColorGreen", "#A0EAAB");
   colors->SetColor("PillBottle", "#FFFFFF");
+  colors->SetColor("Floor", "#E1E5E5");
   colors->SetColor("BackgroundColor", "#FFFFFF");
 
   std::vector<vtkColor3d> colorsVector{colors->GetColor3d("DeskColor"),
@@ -40,16 +41,20 @@ int main(int argc, char *argv[]) {
                                        colors->GetColor3d("PillColorRed"),
                                        colors->GetColor3d("PillColorGreen"),
                                        colors->GetColor3d("PillColorRed"),
-                                       colors->GetColor3d("PillBottle")};
+                                       colors->GetColor3d("PillBottle"),
+                                       colors->GetColor3d("Floor")};
 
   /**************************************************/
   /************** Reading OBJ files *****************/
   /**************************************************/
   std::vector<std::string> fileNames{
-      "../images/desk.obj",     "../images/trumpet.obj",   "../images/lamp.obj",
-      "../images/notebook.obj", "../images/wineglass.obj", "../images/pill.obj",
-      "../images/pill.obj",     "../images/pill.obj",      "../images/pill.obj",
-      "../images/pill.obj", "../images/pill.obj", "../images/pillbottle.obj"};
+      "../images/desk.obj",      "../images/trumpet.obj",
+      "../images/lamp.obj",      "../images/notebook.obj",
+      "../images/wineglass.obj", "../images/pill.obj",
+      "../images/pill.obj",      "../images/pill.obj",
+      "../images/pill.obj",      "../images/pill.obj",
+      "../images/pill.obj",      "../images/pillbottle.obj",
+      "../images/floor.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -94,6 +99,7 @@ int main(int argc, char *argv[]) {
   customizePillPosition(vectorActor[9], vectorActor[0]->GetCenter());
   customizePillPosition(vectorActor[10], vectorActor[0]->GetCenter());
   customizePillBottle(vectorActor[11], vectorActor[0]->GetCenter());
+  customizeFloor(vectorActor[12], vectorActor[0]->GetCenter());
 
   /**************************************************/
   /*************** Rendering window *****************/
