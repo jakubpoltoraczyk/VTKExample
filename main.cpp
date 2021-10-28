@@ -1,78 +1,26 @@
+#include "position/position.h"
+#include "camera/camera.h"
+#include "colors/colors.h"
+
 #include <vtkActor.h>
 #include <vtkCamera.h>
-#include <vtkNamedColors.h>
-#include <vtkNew.h>
 #include <vtkOBJReader.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
-#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
 #include <string>
-#include <vector>
 
-#include "position.h"
-
-class customMouseInteractorStyle : public vtkInteractorStyleTrackballCamera
-{
-public:
-  static customMouseInteractorStyle* New();
-  vtkTypeMacro(customMouseInteractorStyle, vtkInteractorStyleTrackballCamera);
-
-  virtual void OnLeftButtonDown() override
-  {
-    // Forward events
-    vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
-  }
-
-  virtual void OnMiddleButtonDown() override
-  {
-    // Forward events
-    vtkInteractorStyleTrackballCamera::OnMiddleButtonDown();
-  }
-
-  virtual void OnRightButtonDown() override
-  {
-    // Forward events
-    vtkInteractorStyleTrackballCamera::OnRightButtonDown();
-  }
-};
-
-vtkStandardNewMacro(customMouseInteractorStyle);
+vtkStandardNewMacro(CustomMouseInteractorStyle);
 
 int main(int argc, char *argv[]) {
   /**************************************************/
   /*************** Defining colors ******************/
   /**************************************************/
-  vtkNew<vtkNamedColors> colors;
-  colors->SetColor("DeskColor", "#663300");
-  colors->SetColor("TrumpetColor", "#CC9900");
-  colors->SetColor("LampColor", "#E0E0E0");
-  colors->SetColor("NotebookColor", "#C0FAFA");
-  colors->SetColor("WineGlassColor", "#FEFEFE");
-  colors->SetColor("PillColorRed", "#E78686");
-  colors->SetColor("PillColorGreen", "#A0EAAB");
-  colors->SetColor("PillBottle", "#FFFFFF");
-  colors->SetColor("Floor", "#E1E5E5");
-  colors->SetColor("Chair", "#404747");
-  colors->SetColor("BackgroundColor", "#FFFFFF");
 
-  std::vector<vtkColor3d> colorsVector{colors->GetColor3d("DeskColor"),
-                                       colors->GetColor3d("TrumpetColor"),
-                                       colors->GetColor3d("LampColor"),
-                                       colors->GetColor3d("NotebookColor"),
-                                       colors->GetColor3d("WineGlassColor"),
-                                       colors->GetColor3d("PillColorRed"),
-                                       colors->GetColor3d("PillColorRed"),
-                                       colors->GetColor3d("PillColorGreen"),
-                                       colors->GetColor3d("PillColorRed"),
-                                       colors->GetColor3d("PillColorGreen"),
-                                       colors->GetColor3d("PillColorRed"),
-                                       colors->GetColor3d("PillBottle"),
-                                       colors->GetColor3d("Floor"),
-                                       colors->GetColor3d("Chair")};
+  std::vector<vtkColor3d> colorsVector = getColorsVector();
 
   /**************************************************/
   /************** Reading OBJ files *****************/
@@ -139,7 +87,7 @@ int main(int argc, char *argv[]) {
   for (const auto &actor : vectorActor) {
     renderer->AddActor(actor);
   }
-  renderer->SetBackground(colors->GetColor3d("BackgroundColor").GetData());
+  renderer->SetBackground(255, 255, 255);
 
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -148,7 +96,7 @@ int main(int argc, char *argv[]) {
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
-  vtkNew<customMouseInteractorStyle> style;
+  vtkNew<CustomMouseInteractorStyle> style;
   renderWindowInteractor->SetInteractorStyle(style);
 
   renderWindow->SetSize(640, 480);
