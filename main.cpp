@@ -12,8 +12,12 @@
 #include <string>
 #include <vector>
 
+#include "position.h"
+
 int main(int argc, char *argv[]) {
-  /* Defining colors structure */
+  /**************************************************/
+  /*************** Defining colors ******************/
+  /**************************************************/
   vtkNew<vtkNamedColors> colors;
   colors->SetColor("DeskColor", "#663300");
   colors->SetColor("TrumpetColor", "#CC9900");
@@ -27,10 +31,12 @@ int main(int argc, char *argv[]) {
       colors->GetColor3d("LampColor"), colors->GetColor3d("NotebookColor"),
       colors->GetColor3d("GlassColor")};
 
-  /* Reading OBJ file */
-  std::vector<std::string> fileNames{"../desk.obj", "../trumpet.obj",
-                                     "../lamp.obj", "../notebook.obj",
-                                     "../glass.obj"};
+  /**************************************************/
+  /************** Reading OBJ files *****************/
+  /**************************************************/
+  std::vector<std::string> fileNames{
+      "../images/desk.obj", "../images/trumpet.obj", "../images/lamp.obj",
+      "../images/notebook.obj", "../images/glass.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -39,7 +45,9 @@ int main(int argc, char *argv[]) {
     vectorReader.emplace_back(std::move(reader));
   }
 
-  /* Creating mapper */
+  /**************************************************/
+  /*************** Creating mappers *****************/
+  /**************************************************/
   std::vector<vtkNew<vtkPolyDataMapper>> vectorMapper;
   for (const auto &reader : vectorReader) {
     vtkNew<vtkPolyDataMapper> mapper;
@@ -47,7 +55,9 @@ int main(int argc, char *argv[]) {
     vectorMapper.emplace_back(std::move(mapper));
   }
 
-  /* Creating actor */
+  /**************************************************/
+  /*************** Creating actors ******************/
+  /**************************************************/
   std::vector<vtkNew<vtkActor>> vectorActor;
   for (int i = 0; i < vectorMapper.size(); ++i) {
     vtkNew<vtkActor> actor;
@@ -56,41 +66,18 @@ int main(int argc, char *argv[]) {
     vectorActor.emplace_back(std::move(actor));
   }
 
-  /* Moving desk */
-  vectorActor[0]->RotateY(180);
+  /**************************************************/
+  /************* Customizing positions **************/
+  /**************************************************/
+  customizeDeskPosition(vectorActor[0], vectorActor[0]->GetCenter());
+  customizeTrumpetPosition(vectorActor[1], vectorActor[0]->GetCenter());
+  customizeLampPosition(vectorActor[2], vectorActor[0]->GetCenter());
+  customizeNotebookPosition(vectorActor[3], vectorActor[0]->GetCenter());
+  customizeGlassPosition(vectorActor[4], vectorActor[0]->GetCenter());
 
-  /* Moving trumpet */
-  vectorActor[1]->RotateZ(90);
-  auto *coordinates = vectorActor[0]->GetCenter();
-  coordinates[0] += 100;
-  coordinates[1] += 540;
-  coordinates[2] += 250;
-  vectorActor[1]->SetPosition(coordinates);
-
-  /* Moving lamp */
-  vectorActor[2]->RotateY(45);
-  coordinates = vectorActor[0]->GetCenter();
-  coordinates[0] -= 500;
-  coordinates[1] += 480;
-  coordinates[2] -= 150;
-  vectorActor[2]->SetPosition(coordinates);
-
-  /* Moving monitor */
-  vectorActor[3]->SetScale(180);
-  vectorActor[3]->RotateY(90);
-  coordinates = vectorActor[0]->GetCenter();
-  coordinates[1] += 500;
-  vectorActor[3]->SetPosition(coordinates);
-
-  /* Moving glass */
-  vectorActor[4]->SetScale(0.8);
-  coordinates = vectorActor[0]->GetCenter();
-  coordinates[0] -= 500;
-  coordinates[1] += 450;
-  coordinates[2] += 250;
-  vectorActor[4]->SetPosition(coordinates);
-
-  /* Rendering window */
+  /**************************************************/
+  /*************** Rendering window *****************/
+  /**************************************************/
   vtkNew<vtkRenderer> renderer;
   for (const auto &actor : vectorActor) {
     renderer->AddActor(actor);
