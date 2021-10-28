@@ -22,21 +22,34 @@ int main(int argc, char *argv[]) {
   colors->SetColor("DeskColor", "#663300");
   colors->SetColor("TrumpetColor", "#CC9900");
   colors->SetColor("LampColor", "#E0E0E0");
-  colors->SetColor("NotebookColor", "#C0C0C0");
-  colors->SetColor("GlassColor", "#F0FFFF");
+  colors->SetColor("NotebookColor", "#C0FAFA");
+  colors->SetColor("WineGlassColor", "#FEFEFE");
+  colors->SetColor("PillColorRed", "#E78686");
+  colors->SetColor("PillColorGreen", "#A0EAAB");
+  colors->SetColor("PillBottle", "#FFFFFF");
   colors->SetColor("BackgroundColor", "#FFFFFF");
 
-  std::vector<vtkColor3d> colorsVector{
-      colors->GetColor3d("DeskColor"), colors->GetColor3d("TrumpetColor"),
-      colors->GetColor3d("LampColor"), colors->GetColor3d("NotebookColor"),
-      colors->GetColor3d("GlassColor")};
+  std::vector<vtkColor3d> colorsVector{colors->GetColor3d("DeskColor"),
+                                       colors->GetColor3d("TrumpetColor"),
+                                       colors->GetColor3d("LampColor"),
+                                       colors->GetColor3d("NotebookColor"),
+                                       colors->GetColor3d("WineGlassColor"),
+                                       colors->GetColor3d("PillColorRed"),
+                                       colors->GetColor3d("PillColorRed"),
+                                       colors->GetColor3d("PillColorGreen"),
+                                       colors->GetColor3d("PillColorRed"),
+                                       colors->GetColor3d("PillColorGreen"),
+                                       colors->GetColor3d("PillColorRed"),
+                                       colors->GetColor3d("PillBottle")};
 
   /**************************************************/
   /************** Reading OBJ files *****************/
   /**************************************************/
   std::vector<std::string> fileNames{
-      "../images/desk.obj", "../images/trumpet.obj", "../images/lamp.obj",
-      "../images/notebook.obj", "../images/glass.obj"};
+      "../images/desk.obj",     "../images/trumpet.obj",   "../images/lamp.obj",
+      "../images/notebook.obj", "../images/wineglass.obj", "../images/pill.obj",
+      "../images/pill.obj",     "../images/pill.obj",      "../images/pill.obj",
+      "../images/pill.obj", "../images/pill.obj", "../images/pillbottle.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -73,7 +86,14 @@ int main(int argc, char *argv[]) {
   customizeTrumpetPosition(vectorActor[1], vectorActor[0]->GetCenter());
   customizeLampPosition(vectorActor[2], vectorActor[0]->GetCenter());
   customizeNotebookPosition(vectorActor[3], vectorActor[0]->GetCenter());
-  customizeGlassPosition(vectorActor[4], vectorActor[0]->GetCenter());
+  customizeWineGlassPosition(vectorActor[4], vectorActor[0]->GetCenter());
+  customizePillPosition(vectorActor[5], vectorActor[0]->GetCenter());
+  customizePillPosition(vectorActor[6], vectorActor[0]->GetCenter());
+  customizePillPosition(vectorActor[7], vectorActor[0]->GetCenter());
+  customizePillPosition(vectorActor[8], vectorActor[0]->GetCenter());
+  customizePillPosition(vectorActor[9], vectorActor[0]->GetCenter());
+  customizePillPosition(vectorActor[10], vectorActor[0]->GetCenter());
+  customizePillBottle(vectorActor[11], vectorActor[0]->GetCenter());
 
   /**************************************************/
   /*************** Rendering window *****************/
