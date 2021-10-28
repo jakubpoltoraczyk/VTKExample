@@ -6,6 +6,7 @@
 #include <vtkPolyDataMapper.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindow.h>
+#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 
@@ -13,6 +14,33 @@
 #include <vector>
 
 #include "position.h"
+
+class customMouseInteractorStyle : public vtkInteractorStyleTrackballCamera
+{
+public:
+  static customMouseInteractorStyle* New();
+  vtkTypeMacro(customMouseInteractorStyle, vtkInteractorStyleTrackballCamera);
+
+  virtual void OnLeftButtonDown() override
+  {
+    // Forward events
+    vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
+  }
+
+  virtual void OnMiddleButtonDown() override
+  {
+    // Forward events
+    vtkInteractorStyleTrackballCamera::OnMiddleButtonDown();
+  }
+
+  virtual void OnRightButtonDown() override
+  {
+    // Forward events
+    vtkInteractorStyleTrackballCamera::OnRightButtonDown();
+  }
+};
+
+vtkStandardNewMacro(customMouseInteractorStyle);
 
 int main(int argc, char *argv[]) {
   /**************************************************/
@@ -116,6 +144,9 @@ int main(int argc, char *argv[]) {
 
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
+
+  vtkNew<customMouseInteractorStyle> style;
+  renderWindowInteractor->SetInteractorStyle(style);
 
   renderWindow->SetSize(640, 480);
   renderWindow->Render();

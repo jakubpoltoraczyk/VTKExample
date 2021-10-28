@@ -6,12 +6,17 @@ project(demo)
 find_package(VTK COMPONENTS 
   vtkCommonColor
   vtkCommonCore
+  vtkFiltersSources
   vtkIOGeometry
   vtkInteractionStyle
   vtkRenderingContextOpenGL2
   vtkRenderingCore
+  vtkRenderingContext2D
+  vtkViewsContext2D
+  vtkRenderingContextOpenGL2
   vtkRenderingFreeType
   vtkRenderingGL2PSOpenGL2
+  vtkInteractionStyle
   vtkRenderingOpenGL2
   QUIET
 )
