@@ -1,6 +1,7 @@
 #include "camera/camera.h"
 #include "colors/colors.h"
 #include "position/position.h"
+#include "factory/importer.h"
 
 #include <vtkActor.h>
 #include <vtkCamera.h>
@@ -106,6 +107,27 @@ int main(int argc, char *argv[]) {
 
   vtkNew<CustomMouseInteractorStyle> style;
   renderWindowInteractor->SetInteractorStyle(style);
+
+
+  /* USER CODE BEGIN */
+  auto importerVector = getImporterVector();
+  for (auto &importer : importerVector) {
+    importer->SetRenderWindow(renderWindow);
+    importer->Update();
+  }
+
+  auto actors = renderer->GetActors();
+  actors->InitTraversal();
+
+  vtkActor *actor = actors->GetLastActor();
+  actor->RotateX(-90);
+  actor->SetScale(6);
+  auto * coordinates = vectorActor[0]->GetCenter();
+  coordinates[0] += 1250;
+  coordinates[1] += 32;
+  coordinates[2] += 2300;
+  actor->SetPosition(coordinates);
+  /* USER CODE END */
 
   renderWindow->SetSize(640, 480);
   renderWindow->Render();
