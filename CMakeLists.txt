@@ -8,6 +8,7 @@ find_package(VTK COMPONENTS
   vtkCommonCore
   vtkFiltersSources
   vtkIOGeometry
+  vtkIOImport
   vtkInteractionStyle
   vtkRenderingContextOpenGL2
   vtkRenderingCore
