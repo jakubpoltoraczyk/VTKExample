@@ -1,6 +1,6 @@
-#include "position/position.h"
 #include "camera/camera.h"
 #include "colors/colors.h"
+#include "position/position.h"
 
 #include <vtkActor.h>
 #include <vtkCamera.h>
@@ -26,13 +26,14 @@ int main(int argc, char *argv[]) {
   /************** Reading OBJ files *****************/
   /**************************************************/
   std::vector<std::string> fileNames{
-      "../images/desk.obj",      "../images/trumpet.obj",
-      "../images/lamp.obj",      "../images/notebook.obj",
-      "../images/wineglass.obj", "../images/pill.obj",
-      "../images/pill.obj",      "../images/pill.obj",
-      "../images/pill.obj",      "../images/pill.obj",
-      "../images/pill.obj",      "../images/pillbottle.obj",
-      "../images/floor.obj",     "../images/chair.obj"};
+      "../images/desk.obj",       "../images/trumpet.obj",
+      "../images/lamp.obj",       "../images/notebook.obj",
+      "../images/cup.obj",        "../images/pill.obj",
+      "../images/pill.obj",       "../images/pill.obj",
+      "../images/pill.obj",       "../images/pill.obj",
+      "../images/pill.obj",       "../images/pillbottle.obj",
+      "../images/floor.obj",      "../images/chair.obj",
+      "../images/coffetable.obj", "../images/bed.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -69,7 +70,7 @@ int main(int argc, char *argv[]) {
   customizeTrumpetPosition(vectorActor[1], vectorActor[0]->GetCenter());
   customizeLampPosition(vectorActor[2], vectorActor[0]->GetCenter());
   customizeNotebookPosition(vectorActor[3], vectorActor[0]->GetCenter());
-  customizeWineGlassPosition(vectorActor[4], vectorActor[0]->GetCenter());
+  customizeCupPosition(vectorActor[4], vectorActor[0]->GetCenter());
   customizePillPosition(vectorActor[5], vectorActor[0]->GetCenter());
   customizePillPosition(vectorActor[6], vectorActor[0]->GetCenter());
   customizePillPosition(vectorActor[7], vectorActor[0]->GetCenter());
@@ -79,6 +80,8 @@ int main(int argc, char *argv[]) {
   customizePillBottle(vectorActor[11], vectorActor[0]->GetCenter());
   customizeFloor(vectorActor[12], vectorActor[0]->GetCenter());
   customizeChair(vectorActor[13], vectorActor[0]->GetCenter());
+  customizeCoffeTable(vectorActor[14], vectorActor[0]->GetCenter());
+  customizeBed(vectorActor[15], vectorActor[0]->GetCenter());
 
   /**************************************************/
   /*************** Rendering window *****************/

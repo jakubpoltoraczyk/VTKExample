@@ -31,8 +31,9 @@ void customizeNotebookPosition(vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetPosition(coordinates);
 }
 
-void customizeWineGlassPosition(vtkNew<vtkActor> &actor, double coordinates[]) {
-  actor->SetScale(25);
+void customizeCupPosition(vtkNew<vtkActor> &actor, double coordinates[]) {
+  actor->SetScale(8);
+  actor->RotateY(-45);
   coordinates[0] -= 500;
   coordinates[1] += 475;
   coordinates[2] += 250;
@@ -99,9 +100,11 @@ void customizePillBottle(vtkNew<vtkActor> &actor, double coordinates[]) {
 }
 
 void customizeFloor(vtkNew<vtkActor> &actor, double coordinates[]) {
-  actor->SetScale(100);
+  actor->SetScale(120);
   actor->RotateX(-90);
+  coordinates[0] += 1600;
   coordinates[1] -= 590;
+  coordinates[2] += 1200;
   actor->SetPosition(coordinates);
 }
 
@@ -110,5 +113,21 @@ void customizeChair(vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->RotateY(180);
   coordinates[1] -= 490;
   coordinates[2] += 500;
+  actor->SetPosition(coordinates);
+}
+
+void customizeCoffeTable(vtkNew<vtkActor> & actor, double coordinates[]){
+  actor->SetScale(30);
+  coordinates[0] -= 3000;
+  coordinates[1] -= 250;
+  coordinates[2] += 2300;
+  actor->SetPosition(coordinates);
+}
+
+void customizeBed(vtkNew<vtkActor> & actor, double coordinates[]) {
+  actor->SetScale(10);
+  coordinates[0] += 3200;
+  coordinates[1] -= 600;
+  coordinates[2] += 300;
   actor->SetPosition(coordinates);
 }
