@@ -2,10 +2,10 @@ To-Do list in Demo project:
 - kolizja/animacja: trąbka która przechyla się tak, aby oprzeć się na stole
 - nowe obiekty: przesunięcie obecnego układu, dodanie nowych obiektów (wszystko statycznie)
 - ściany/mapa(plakat): dodanie ścian pokoju oraz na jednej z nich dołożyc plakat-mapę (format .dem)
+- tekstury: rozwiązać buga z teskturami dla importera OBJ lub znalezc nowy sposob na wczytywanie tekstur (np. inny format)
 
 Jakub:
 - dokumentacja: dodatkowe mozliwosci VTK
-- tekstury: do obecnych i przyszłych obiektów dodać czytanie tekstur
 
 Michał:
 - dokumentacja: proces instalacji
