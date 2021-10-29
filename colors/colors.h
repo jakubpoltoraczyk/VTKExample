@@ -19,6 +19,8 @@ std::vector<vtkColor3d> getColorsVector() {
   colors->SetColor("Chair", "#404747");
   colors->SetColor("CoffeTable", " 	#A0522D");
   colors->SetColor("Bed", "#FFFFE0");
+  colors->SetColor("Book", "#F8F8FF");
+  colors->SetColor("Pen", "#F0FFF0");
 
   return {
       colors->GetColor3d("DeskColor"),    colors->GetColor3d("TrumpetColor"),
@@ -28,5 +30,7 @@ std::vector<vtkColor3d> getColorsVector() {
       colors->GetColor3d("PillColorRed"), colors->GetColor3d("PillColorGreen"),
       colors->GetColor3d("PillColorRed"), colors->GetColor3d("PillBottle"),
       colors->GetColor3d("Floor"),        colors->GetColor3d("Chair"),
-      colors->GetColor3d("CoffeTable"), colors->GetColor3d("Bed")};
+      colors->GetColor3d("CoffeTable"),   colors->GetColor3d("Bed"),
+      colors->GetColor3d("Book"),         colors->GetColor3d("Book"),
+      colors->GetColor3d("Pen")};
 }

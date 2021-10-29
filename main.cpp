@@ -33,7 +33,9 @@ int main(int argc, char *argv[]) {
       "../images/pill.obj",       "../images/pill.obj",
       "../images/pill.obj",       "../images/pillbottle.obj",
       "../images/floor.obj",      "../images/chair.obj",
-      "../images/coffetable.obj", "../images/bed.obj"};
+      "../images/coffetable.obj", "../images/bed.obj",
+      "../images/book.obj",       "../images/book.obj",
+      "../images/pen.obj"};
   std::vector<vtkNew<vtkOBJReader>> vectorReader;
   for (const auto &fileName : fileNames) {
     vtkNew<vtkOBJReader> reader;
@@ -82,6 +84,9 @@ int main(int argc, char *argv[]) {
   customizeChair(vectorActor[13], vectorActor[0]->GetCenter());
   customizeCoffeTable(vectorActor[14], vectorActor[0]->GetCenter());
   customizeBed(vectorActor[15], vectorActor[0]->GetCenter());
+  customizeBook(vectorActor[16], vectorActor[0]->GetCenter());
+  customizeBook(vectorActor[17], vectorActor[0]->GetCenter());
+  customizePen(vectorActor[18], vectorActor[0]->GetCenter());
 
   /**************************************************/
   /*************** Rendering window *****************/

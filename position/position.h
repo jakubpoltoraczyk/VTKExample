@@ -24,3 +24,7 @@ void customizeChair(vtkNew<vtkActor> & actor, double coordinates[]);
 void customizeCoffeTable(vtkNew<vtkActor> & actor, double coordinates[]);
 
 void customizeBed(vtkNew<vtkActor> & actor, double coordinates[]);
+
+void customizeBook(vtkNew<vtkActor> & actor, double coordinates[]);
+
+void customizePen(vtkNew<vtkActor> & actor, double coordinates[]);
