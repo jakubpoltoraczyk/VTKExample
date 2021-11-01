@@ -8,21 +8,21 @@ find_package(VTK COMPONENTS
   vtkCommonCore
   vtkFiltersSources
   vtkIOGeometry
+  vtkIOImport
   vtkInteractionStyle
   vtkRenderingContextOpenGL2
   vtkRenderingCore
   vtkRenderingContext2D
   vtkViewsContext2D
-  vtkRenderingContextOpenGL2
   vtkRenderingFreeType
   vtkRenderingGL2PSOpenGL2
-  vtkInteractionStyle
   vtkRenderingOpenGL2
+  vtkCommonDataModel
   QUIET
 )
 
-add_executable(${PROJECT_NAME} 
-  position/position.cpp
+add_executable(${PROJECT_NAME}
+  factory/position/reader/position.cpp
   main.cpp 
 )
 
