@@ -8,12 +8,14 @@
 #include <vtkRenderWindowInteractor.h>
 
 #include <algorithm>
+#include <utility>
 #include <vector>
 
 class CustomMouseInteractorStyle : public vtkInteractorStyleTrackballCamera {
 public:
   static CustomMouseInteractorStyle *New();
   vtkTypeMacro(CustomMouseInteractorStyle, vtkInteractorStyleTrackballCamera);
+  enum class ButtonStatus { Active, InActive };
 
   void OnLeftButtonDown() override;
 
@@ -21,8 +23,9 @@ public:
 
   void OnRightButtonDown() override;
 
-  std::vector<vtkActor *> buttons;
+  std::vector<std::pair<vtkActor *, ButtonStatus>> buttons;
 
-  private:
-    void customizePanelButtons(vtkNew<vtkPropPicker> & picker);
+private:
+  void customizePanelButtons(vtkNew<vtkPropPicker> &picker);
+  void customizeBackground(vtkActor *button);
 };

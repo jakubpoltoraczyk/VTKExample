@@ -3,17 +3,18 @@
 #include "factory/colors.h"
 #include "factory/importers.h"
 #include "factory/mappers.h"
+#include "factory/panel/panel.h"
 #include "factory/position/reader/position.h"
 #include "factory/readers.h"
-#include "factory/panel/panel.h"
 
 #include <vtkCamera.h>
+#include <vtkCubeSource.h>
 #include <vtkPlaneSource.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
+#include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
-#include <vtkCubeSource.h>
 
 vtkStandardNewMacro(CustomMouseInteractorStyle);
 
@@ -35,19 +36,18 @@ int main(int argc, char *argv[]) {
   /************* Customizing positions **************/
   customizeObjectsPositions(actorsVector);
 
-  /* USER CODE BEGIN PANEL */
-
-  vtkNew<vtkActor> panelBackground = getPanelBackground(actorsVector[0]->GetCenter());
-  std::vector<vtkNew<vtkActor>> panelButtonsVector = getPanelButtonsVector(panelBackground->GetCenter());
-
-  /* USER CODE END PANEL */
+  /************* Creating buttons panel *************/
+  vtkNew<vtkActor> panelBackground =
+      getPanelBackground(actorsVector[0]->GetCenter());
+  std::vector<vtkNew<vtkActor>> panelButtonsVector =
+      getPanelButtonsVector(panelBackground->GetCenter());
 
   /*************** Rendering window *****************/
   vtkNew<vtkRenderer> renderer;
   for (const auto &actor : actorsVector) {
     renderer->AddActor(actor);
   }
-  for (auto & panelButton: panelButtonsVector) {
+  for (auto &panelButton : panelButtonsVector) {
     renderer->AddActor(panelButton);
   }
   renderer->AddActor(panelBackground);
@@ -62,8 +62,9 @@ int main(int argc, char *argv[]) {
 
   vtkNew<CustomMouseInteractorStyle> style;
   style->SetDefaultRenderer(renderer);
-  for(auto & panelButton: panelButtonsVector){
-    style->buttons.emplace_back(panelButton.Get());
+  for (auto &panelButton : panelButtonsVector) {
+    style->buttons.emplace_back(std::make_pair(
+        panelButton.Get(), CustomMouseInteractorStyle::ButtonStatus::InActive));
   }
   renderWindowInteractor->SetInteractorStyle(style);
 
