@@ -1,9 +1,10 @@
 To-Do list in Demo project:
-- kolizja/animacja: trąbka która przechyla się tak, aby oprzeć się na stole
-- ściany/mapa(plakat): dodanie ścian pokoju oraz na jednej z nich dołożyc plakat-mapę (format .dem)
+- animacja: np. trąbka która przechyla się tak, aby oprzeć się na stole
+- poprawić panel do obsługi tła oraz dodać slider (scrollbar) z jakakolwiek funkcjonalnoscia zwiazana z tłem
 
 Jakub:
 - dokumentacja: dodatkowe mozliwosci VTK
+- ściany/mapa(plakat): dodanie ścian pokoju oraz na jednej z nich dołożyc plakat-mapę (format .dem)
 
 Michał:
 - dokumentacja: proces instalacji
