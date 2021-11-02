@@ -1,28 +1,28 @@
 #pragma once
 
+#include <vtkActor.h>
 #include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkNew.h>
+#include <vtkPropPicker.h>
+#include <vtkProperty.h>
+#include <vtkRenderWindowInteractor.h>
 
-class CustomMouseInteractorStyle : public vtkInteractorStyleTrackballCamera
-{
+#include <algorithm>
+#include <vector>
+
+class CustomMouseInteractorStyle : public vtkInteractorStyleTrackballCamera {
 public:
-  static CustomMouseInteractorStyle* New();
+  static CustomMouseInteractorStyle *New();
   vtkTypeMacro(CustomMouseInteractorStyle, vtkInteractorStyleTrackballCamera);
 
-  virtual void OnLeftButtonDown() override
-  {
-    // Forward events
-    vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
-  }
+  void OnLeftButtonDown() override;
 
-  virtual void OnMiddleButtonDown() override
-  {
-    // Forward events
-    vtkInteractorStyleTrackballCamera::OnMiddleButtonDown();
-  }
+  void OnMiddleButtonDown() override;
 
-  virtual void OnRightButtonDown() override
-  {
-    // Forward events
-    vtkInteractorStyleTrackballCamera::OnRightButtonDown();
-  }
+  void OnRightButtonDown() override;
+
+  std::vector<vtkActor *> buttons;
+
+  private:
+    void customizePanelButtons(vtkNew<vtkPropPicker> & picker);
 };

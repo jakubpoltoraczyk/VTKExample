@@ -23,6 +23,8 @@ find_package(VTK COMPONENTS
 
 add_executable(${PROJECT_NAME}
   factory/position/reader/position.cpp
+  factory/panel/panel.cpp
+  camera/camera.cpp
   main.cpp 
 )
 
