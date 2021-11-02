@@ -1,5 +1,6 @@
 To-Do list in Demo project:
 - animacja: np. trąbka która przechyla się tak, aby oprzeć się na stole
+- ściany/mapa(plakat): dodanie ścian pokoju oraz na jednej z nich dołożyc plakat-mapę (format .dem)
 - poprawić panel do obsługi tła oraz dodać slider (scrollbar) z jakakolwiek funkcjonalnoscia zwiazana z tłem
 
 Jakub:

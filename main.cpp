@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
   std::vector<vtkNew<vtkActor>> panelButtonsVector =
       getPanelButtonsVector(panelBackground->GetCenter());
 
-  /*************** Rendering window *****************/
+  /*************** Creating renderer ****************/
   vtkNew<vtkRenderer> renderer;
   for (const auto &actor : actorsVector) {
     renderer->AddActor(actor);
@@ -53,13 +53,16 @@ int main(int argc, char *argv[]) {
   renderer->AddActor(panelBackground);
   renderer->SetBackground(255, 255, 255);
 
+  /************ Creating renderer window ************/
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
   renderWindow->SetWindowName("Demo project");
 
+  /******* Creating renderer window interactor ******/
   vtkNew<vtkRenderWindowInteractor> renderWindowInteractor;
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
+  /**** Creating renderer window interactor style ***/
   vtkNew<CustomMouseInteractorStyle> style;
   style->SetDefaultRenderer(renderer);
   for (auto &panelButton : panelButtonsVector) {
@@ -78,14 +81,37 @@ int main(int argc, char *argv[]) {
   auto actors = renderer->GetActors();
   actors->InitTraversal();
 
-  vtkActor *actor = actors->GetLastActor();
-  actor->RotateX(-90);
-  actor->SetScale(6);
-  auto *coordinates = actorsVector[0]->GetCenter();
-  coordinates[0] += 1250;
-  coordinates[1] += 32;
-  coordinates[2] += 2300;
-  actor->SetPosition(coordinates);
+  int normalActorLimit = actorsVector.size() + panelButtonsVector.size() + 1;
+  for (int i = 0; i < normalActorLimit; ++i) {
+    actors->GetNextActor();
+  }
+
+  int importerActorLimit = actors->GetNumberOfItems() - normalActorLimit;
+  for (int i = 0; i < importerActorLimit; ++i) {
+    std::cout << "Hello";
+    vtkActor *actor = actors->GetNextActor();
+    switch (i) {
+    case 1: {
+      actor->RotateX(-90);
+      actor->SetScale(6);
+      auto *coordinates = actorsVector[0]->GetCenter();
+      coordinates[0] += 1250;
+      coordinates[1] += 32;
+      coordinates[2] += 2300;
+      actor->SetPosition(coordinates);
+      break;
+    }
+    case 3:{
+      actor->SetScale(1200);
+      actor->RotateY(87);
+      auto *coordinates = actorsVector[0]->GetCenter();
+      coordinates[0] += 4500;
+      coordinates[1] += 1400;
+      coordinates[2] += 2500;
+      actor->SetPosition(coordinates);
+    }
+    }
+  }
   /* USER CODE END IMPORTER */
 
   renderWindow->SetSize(640, 480);
