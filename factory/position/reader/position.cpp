@@ -131,8 +131,8 @@ void CustomizePositionHelperFunctions::customizePillBottlePosition(
 
 void CustomizePositionHelperFunctions::customizeFloorPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
-  actor->SetScale(120);
-  actor->RotateX(-90);
+  actor->SetScale(10);
+  actor->RotateY(90);
   coordinates[0] += 1600;
   coordinates[1] -= 590;
   coordinates[2] += 1200;
@@ -162,7 +162,7 @@ void CustomizePositionHelperFunctions::customizeBedPosition(
   actor->SetScale(10);
   coordinates[0] += 3200;
   coordinates[1] -= 600;
-  coordinates[2] += 300;
+  coordinates[2] += 350;
   actor->SetPosition(coordinates);
 }
 

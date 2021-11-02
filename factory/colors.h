@@ -15,7 +15,7 @@ std::vector<vtkColor3d> getColorsVector() {
   colors->SetColor("PillColorRed", "#E78686");
   colors->SetColor("PillColorGreen", "#A0EAAB");
   colors->SetColor("PillBottle", "#FFFFFF");
-  colors->SetColor("Floor", "#E1E5E5");
+  colors->SetColor("Floor", "#FFE4B5");
   colors->SetColor("Chair", "#404747");
   colors->SetColor("CoffeTable", " 	#A0522D");
   colors->SetColor("Bed", "#FFFFE0");
