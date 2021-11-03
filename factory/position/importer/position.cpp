@@ -67,7 +67,7 @@ void CustomizeImporterObjectsHelperFunctions::customizeLeftWall(
 
 void CustomizeImporterObjectsHelperFunctions::customizeForeWall(
     vtkActor *actor, double coordinates[]) {
-  actor->VisibilityOff();
+  //actor->VisibilityOff();
   actor->SetScale(1480, 800, 1);
   coordinates[0] += 200;
   coordinates[1] += 1000;

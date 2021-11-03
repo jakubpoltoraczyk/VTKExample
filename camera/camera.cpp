@@ -1,15 +1,15 @@
 #include "camera.h"
 
 #include <vtkCamera.h>
+#include <vtkLight.h>
+#include <vtkLightCollection.h>
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkRenderer.h>
-#include <vtkLightCollection.h>
-#include <vtkLight.h>
 
 #include <algorithm>
 
-void CustomMouseInteractorStyle::OnMouseMove(){
+void CustomMouseInteractorStyle::OnMouseMove() {
   /* Wall visibility depends on camera position */
   if (auto currentRenderer = this->GetCurrentRenderer();
       currentRenderer != nullptr) {
@@ -92,21 +92,21 @@ void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
   /* Third button */
   if (buttons[2].second == ButtonStatus::Active) {
     /* Activate slider */
-    vtkLightCollection* lights = currentRenderer->GetLights();
+    vtkLightCollection *lights = currentRenderer->GetLights();
     lights->InitTraversal();
-    vtkLight* light = lights->GetNextItem();
+    vtkLight *light = lights->GetNextItem();
     light->SwitchOff();
-    if(lights->GetNumberOfItems() > 1){
+    if (lights->GetNumberOfItems() > 1) {
       light = lights->GetNextItem();
       light->SwitchOff();
     }
-    
+
   } else {
-    vtkLightCollection* lights = currentRenderer->GetLights();
+    vtkLightCollection *lights = currentRenderer->GetLights();
     lights->InitTraversal();
-    vtkLight* light = lights->GetNextItem();
+    vtkLight *light = lights->GetNextItem();
     light->SwitchOn();
-    if(lights->GetNumberOfItems() > 1){
+    if (lights->GetNumberOfItems() > 1) {
       light = lights->GetNextItem();
       light->SwitchOff();
     }
@@ -117,6 +117,7 @@ void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
 void CustomMouseInteractorStyle::changeWallsVisiblity(double cameraPosition[]) {
   std::vector<double> cameraAndWallDistances;
 
+  /* Creating vector with points distance */
   std::transform(walls.begin(), walls.end(),
                  std::back_inserter(cameraAndWallDistances),
                  [cameraPosition](auto it) {
@@ -124,14 +125,28 @@ void CustomMouseInteractorStyle::changeWallsVisiblity(double cameraPosition[]) {
                                                           it->GetPosition());
                  });
 
+  /* Looking for two smallest values */
   auto min_elem_first = std::min_element(cameraAndWallDistances.begin(),
-                                   cameraAndWallDistances.end());
+                                         cameraAndWallDistances.end());
+  auto min_elem_second = std::min_element(
+      cameraAndWallDistances.begin(), cameraAndWallDistances.end(),
+      [min_elem_first](double a, double b) {
+        if (b == *min_elem_first) {
+          b = a;
+        }
+        return (a <= b && a != *min_elem_first);
+      });
 
+  /* Setting each wall visibility as true */
   for (int i = 0; i < cameraAndWallDistances.size(); ++i) {
-    if (*min_elem_first == cameraAndWallDistances[i]) {
+    walls[i]->VisibilityOn();
+  }
+
+  /* Hiding appropriate two walls */
+  for (int i = 0; i < cameraAndWallDistances.size(); ++i) {
+    if (cameraAndWallDistances[i] == *min_elem_first ||
+        cameraAndWallDistances[i] == *min_elem_second) {
       walls[i]->VisibilityOff();
-    } else {
-      walls[i]->VisibilityOn();
     }
   }
 }
