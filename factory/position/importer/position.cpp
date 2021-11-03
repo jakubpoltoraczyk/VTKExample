@@ -16,6 +16,12 @@ void customizeImporterObjectsPositions(vtkNew<vtkActor> &centerActor,
     case 5:
       customizeBackWall(actor, centerActor->GetCenter());
       break;
+    case 7:
+      customizeLeftWall(actor, centerActor->GetCenter());
+      break;
+    case 9:
+      customizeForeWall(actor, centerActor->GetCenter());
+      break;
     }
   }
 }
@@ -46,5 +52,25 @@ void CustomizeImporterObjectsHelperFunctions::customizeBackWall(
   coordinates[0] += 200;
   coordinates[1] += 1000;
   coordinates[2] -= 830;
+  actor->SetPosition(coordinates);
+}
+
+void CustomizeImporterObjectsHelperFunctions::customizeLeftWall(
+    vtkActor *actor, double coordinates[]) {
+  actor->SetScale(1020, 800, 1);
+  actor->RotateY(90);
+  coordinates[0] -= 1355;
+  coordinates[1] += 1000;
+  coordinates[2] += 2160;
+  actor->SetPosition(coordinates);
+}
+
+void CustomizeImporterObjectsHelperFunctions::customizeForeWall(
+    vtkActor *actor, double coordinates[]) {
+  actor->SetScale(1480, 800, 1);
+  actor->VisibilityOff();
+  coordinates[0] += 200;
+  coordinates[1] += 1000;
+  coordinates[2] += 3225;
   actor->SetPosition(coordinates);
 }

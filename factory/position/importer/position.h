@@ -13,4 +13,8 @@ void customizeCoronaBottle(vtkActor *actor, double coordinates[]);
 void customizeRightWall(vtkActor *actor, double coordinates[]);
 
 void customizeBackWall(vtkActor *actor, double coordinates[]);
+
+void customizeLeftWall(vtkActor *actor, double coordinates[]);
+
+void customizeForeWall(vtkActor *actor, double coordinates[]);
 } // namespace CustomizeImporterObjectsHelperFunctions

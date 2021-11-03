@@ -26,5 +26,17 @@ std::vector<vtkNew<vtkOBJImporter>> getImportersVector() {
   importer3->SetTexturePath("../images/wall/tex");
   importersVector.emplace_back(std::move(importer3));
 
+  vtkNew<vtkOBJImporter> importer4;
+  importer4->SetFileName("../images/wall/wall.obj");
+  importer4->SetFileNameMTL("../images/wall/wall.mtl");
+  importer4->SetTexturePath("../images/wall/tex");
+  importersVector.emplace_back(std::move(importer4));
+
+  vtkNew<vtkOBJImporter> importer5;
+  importer5->SetFileName("../images/wall/wall.obj");
+  importer5->SetFileNameMTL("../images/wall/wall.mtl");
+  importer5->SetTexturePath("../images/wall/tex");
+  importersVector.emplace_back(std::move(importer5));
+
   return importersVector;
 }
