@@ -3,8 +3,8 @@
 #include <random>
 #include <stdlib.h>
 
-void customizeObjectsPositions(std::vector<vtkNew<vtkActor>> &vectorActor) {
-  using namespace CustomizePositionHelperFunctions;
+void customizeReaderObjectsPositions(std::vector<vtkNew<vtkActor>> &vectorActor) {
+  using namespace CustomizeReaderObjectsHelperFunctions;
   customizeDeskPosition(vectorActor[0], vectorActor[0]->GetCenter());
   customizeTrumpetPosition(vectorActor[1], vectorActor[0]->GetCenter());
   customizeLampPosition(vectorActor[2], vectorActor[0]->GetCenter());
@@ -26,12 +26,12 @@ void customizeObjectsPositions(std::vector<vtkNew<vtkActor>> &vectorActor) {
   customizePenPosition(vectorActor[18], vectorActor[0]->GetCenter());
 }
 
-void CustomizePositionHelperFunctions::customizeDeskPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeDeskPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->RotateY(180);
 }
 
-void CustomizePositionHelperFunctions::customizeTrumpetPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeTrumpetPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->RotateX(90);
   actor->RotateY(45);
@@ -41,7 +41,7 @@ void CustomizePositionHelperFunctions::customizeTrumpetPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeLampPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeLampPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->RotateY(45);
   coordinates[0] -= 500;
@@ -50,7 +50,7 @@ void CustomizePositionHelperFunctions::customizeLampPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeNotebookPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeNotebookPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(180);
   actor->RotateY(90);
@@ -58,7 +58,7 @@ void CustomizePositionHelperFunctions::customizeNotebookPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeCupPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeCupPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(8);
   actor->RotateY(-45);
@@ -68,7 +68,7 @@ void CustomizePositionHelperFunctions::customizeCupPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizePillPosition(
+void CustomizeReaderObjectsHelperFunctions::customizePillPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   static int counter = 0;
   static int movementX = 400;
@@ -119,7 +119,7 @@ void CustomizePositionHelperFunctions::customizePillPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizePillBottlePosition(
+void CustomizeReaderObjectsHelperFunctions::customizePillBottlePosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(10);
   actor->RotateX(-90);
@@ -129,7 +129,7 @@ void CustomizePositionHelperFunctions::customizePillBottlePosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeFloorPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeFloorPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(10);
   actor->RotateY(90);
@@ -139,7 +139,7 @@ void CustomizePositionHelperFunctions::customizeFloorPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeChairPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeChairPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(1.3);
   actor->RotateY(180);
@@ -148,7 +148,7 @@ void CustomizePositionHelperFunctions::customizeChairPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeCoffeTablePosition(
+void CustomizeReaderObjectsHelperFunctions::customizeCoffeTablePosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(30);
   coordinates[0] -= 3000;
@@ -157,7 +157,7 @@ void CustomizePositionHelperFunctions::customizeCoffeTablePosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeBedPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeBedPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->SetScale(10);
   coordinates[0] += 3200;
@@ -166,7 +166,7 @@ void CustomizePositionHelperFunctions::customizeBedPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizeBookPosition(
+void CustomizeReaderObjectsHelperFunctions::customizeBookPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   static int counter = 0;
   actor->SetScale(15);
@@ -186,7 +186,7 @@ void CustomizePositionHelperFunctions::customizeBookPosition(
   actor->SetPosition(coordinates);
 }
 
-void CustomizePositionHelperFunctions::customizePenPosition(
+void CustomizeReaderObjectsHelperFunctions::customizePenPosition(
     vtkNew<vtkActor> &actor, double coordinates[]) {
   actor->RotateY(-35);
   coordinates[0] += 1100;

@@ -5,9 +5,9 @@
 
 #include <vector>
 
-void customizeObjectsPositions(std::vector<vtkNew<vtkActor>> &vectorActor);
+void customizeReaderObjectsPositions(std::vector<vtkNew<vtkActor>> &vectorActor);
 
-namespace CustomizePositionHelperFunctions {
+namespace CustomizeReaderObjectsHelperFunctions {
 
 void customizeDeskPosition(vtkNew<vtkActor> &actor, double coordinates[]);
 
