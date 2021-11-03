@@ -18,6 +18,8 @@ public:
 
   enum class ButtonStatus { Active, InActive };
 
+  void OnMouseMove() override;
+
   void OnLeftButtonDown() override;
 
   void OnMiddleButtonDown() override;
