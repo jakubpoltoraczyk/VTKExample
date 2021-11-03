@@ -8,19 +8,19 @@ void customizeImporterObjectsPositions(vtkNew<vtkActor> &centerActor,
     vtkActor *actor = actors->GetNextActor();
     switch (i) {
     case 1:
-      customizeCoronaBottle(actor, centerActor->GetCenter());
-      break;
-    case 3:
       customizeRightWall(actor, centerActor->GetCenter());
       break;
-    case 5:
+    case 3:
       customizeBackWall(actor, centerActor->GetCenter());
       break;
-    case 7:
+    case 5:
       customizeLeftWall(actor, centerActor->GetCenter());
       break;
-    case 9:
+    case 7:
       customizeForeWall(actor, centerActor->GetCenter());
+      break;
+    case 9:
+      customizeCoronaBottle(actor, centerActor->GetCenter());
       break;
     }
   }
@@ -67,8 +67,8 @@ void CustomizeImporterObjectsHelperFunctions::customizeLeftWall(
 
 void CustomizeImporterObjectsHelperFunctions::customizeForeWall(
     vtkActor *actor, double coordinates[]) {
-  actor->SetScale(1480, 800, 1);
   actor->VisibilityOff();
+  actor->SetScale(1480, 800, 1);
   coordinates[0] += 200;
   coordinates[1] += 1000;
   coordinates[2] += 3225;

@@ -4,9 +4,9 @@
 #include "factory/importers.h"
 #include "factory/mappers.h"
 #include "factory/panel/panel.h"
+#include "factory/position/importer/position.h"
 #include "factory/position/reader/position.h"
 #include "factory/readers.h"
-#include "factory/position/importer/position.h"
 
 #include <vtkCamera.h>
 #include <vtkCubeSource.h>
@@ -87,12 +87,23 @@ int main(int argc, char *argv[]) {
   }
 
   int importerActorsSize = actors->GetNumberOfItems() - otherActorsSize;
-  customizeImporterObjectsPositions(actorsVector[0], actors, importerActorsSize);
+  customizeImporterObjectsPositions(actorsVector[0], actors,
+                                    importerActorsSize);
+
+  auto actors2 = renderer->GetActors();
+  actors2->InitTraversal();
+  for (int i = 0; i < otherActorsSize; ++i) {
+    actors2->GetNextActor();
+  }
+  for (int i = 0; i < 4; ++i) {
+    actors2->GetNextActor();
+    style->walls.emplace_back(actors2->GetNextActor());
+  }
 
   /************** Final preparations ***************/
   renderWindow->SetSize(640, 480);
   renderWindow->Render();
-  
+
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;

@@ -1,12 +1,17 @@
 #include "camera.h"
 
+#include <vtkCamera.h>
+#include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkRenderer.h>
+
+#include <algorithm>
 
 void CustomMouseInteractorStyle::OnLeftButtonDown() {
   int *clickPos = this->GetInteractor()->GetEventPosition();
   vtkNew<vtkPropPicker> picker;
   picker->Pick(clickPos[0], clickPos[1], 0, this->GetDefaultRenderer());
+
   /* When button from panel is clicked */
   if (auto *button = picker->GetActor();
       std::find_if(buttons.begin(), buttons.end(),
@@ -16,6 +21,13 @@ void CustomMouseInteractorStyle::OnLeftButtonDown() {
     customizePanelButtons(picker);
     customizeBackground(button);
   }
+
+  /* Wall visibility depends on camera position */
+  if (auto currentRenderer = this->GetCurrentRenderer();
+      currentRenderer != nullptr) {
+    changeWallsVisiblity(currentRenderer->GetActiveCamera()->GetPosition());
+  }
+
   // Forward events
   vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
 }
@@ -75,5 +87,27 @@ void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
     /* Activate slider */
   } else {
     /* Block slider */
+  }
+}
+
+void CustomMouseInteractorStyle::changeWallsVisiblity(double cameraPosition[]) {
+  std::vector<double> cameraAndWallDistances;
+
+  std::transform(walls.begin(), walls.end(),
+                 std::back_inserter(cameraAndWallDistances),
+                 [cameraPosition](auto it) {
+                   return vtkMath::Distance2BetweenPoints(cameraPosition,
+                                                          it->GetPosition());
+                 });
+
+  auto min_elem = std::min_element(cameraAndWallDistances.begin(),
+                                   cameraAndWallDistances.end());
+
+  for (int i = 0; i < cameraAndWallDistances.size(); ++i) {
+    if (*min_elem == cameraAndWallDistances[i]) {
+      walls[i]->VisibilityOff();
+    } else {
+      walls[i]->VisibilityOn();
+    }
   }
 }
