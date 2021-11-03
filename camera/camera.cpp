@@ -4,6 +4,8 @@
 #include <vtkMath.h>
 #include <vtkNamedColors.h>
 #include <vtkRenderer.h>
+#include <vtkLightCollection.h>
+#include <vtkLight.h>
 
 #include <algorithm>
 
@@ -90,7 +92,24 @@ void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
   /* Third button */
   if (buttons[2].second == ButtonStatus::Active) {
     /* Activate slider */
+    vtkLightCollection* lights = currentRenderer->GetLights();
+    lights->InitTraversal();
+    vtkLight* light = lights->GetNextItem();
+    light->SwitchOff();
+    if(lights->GetNumberOfItems() > 1){
+      light = lights->GetNextItem();
+      light->SwitchOff();
+    }
+    
   } else {
+    vtkLightCollection* lights = currentRenderer->GetLights();
+    lights->InitTraversal();
+    vtkLight* light = lights->GetNextItem();
+    light->SwitchOn();
+    if(lights->GetNumberOfItems() > 1){
+      light = lights->GetNextItem();
+      light->SwitchOff();
+    }
     /* Block slider */
   }
 }

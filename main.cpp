@@ -16,6 +16,10 @@
 #include <vtkRenderer.h>
 #include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
+#include <vtkLight.h>
+#include <vtkLightActor.h>
+#include <vtkLightCollection.h>
+
 
 vtkStandardNewMacro(CustomMouseInteractorStyle);
 
@@ -53,6 +57,15 @@ int main(int argc, char *argv[]) {
   }
   renderer->AddActor(panelBackground);
   renderer->SetBackground(255, 255, 255);
+
+  /************* Creating lighting ******************/
+  vtkNew<vtkLight> MainLight;
+  MainLight->SetPosition(actorsVector[12]->GetPosition()[0],10000, actorsVector[12]->GetPosition()[2]);
+  MainLight->SetFocalPoint(actorsVector[12]->GetPosition());
+  MainLight->SetColor(colorsVector[13].GetData());
+  MainLight->SwitchOn();
+  renderer->RemoveAllLights();
+  renderer->AddLight(MainLight);
 
   /************ Creating renderer window ************/
   vtkNew<vtkRenderWindow> renderWindow;
