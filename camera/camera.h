@@ -2,12 +2,14 @@
 
 #include <vtkActor.h>
 #include <vtkInteractorStyleTrackballCamera.h>
+#include <vtkLight.h>
 #include <vtkNew.h>
 #include <vtkPropPicker.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindowInteractor.h>
 
 #include <algorithm>
+#include <memory>
 #include <utility>
 #include <vector>
 
@@ -29,8 +31,12 @@ public:
   std::vector<std::pair<vtkActor *, ButtonStatus>> buttons;
   std::vector<vtkActor *> walls;
 
+  void setMainLight(vtkLight *light) { mainLight = light; };
+
 private:
   void customizePanelButtons(vtkNew<vtkPropPicker> &picker);
   void customizeBackground(vtkActor *button);
   void changeWallsVisiblity(double cameraPosition[]);
+
+  vtkLight *mainLight;
 };

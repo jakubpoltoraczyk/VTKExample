@@ -11,4 +11,3 @@ Michał:
 - dokumentacja: proces instalacji
 - dokumentacja: opis demo projektu
 - światło: lampka zapala się ze światłem padającym na biurko
-

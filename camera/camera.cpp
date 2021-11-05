@@ -75,6 +75,9 @@ void CustomMouseInteractorStyle::customizePanelButtons(
 
 void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
   auto *currentRenderer = this->GetCurrentRenderer();
+  vtkNew<vtkNamedColors> colors;
+  colors->SetColor("MainLightOn", "#FFFFFF");
+  colors->SetColor("MainLightOff", "#303030");
   /* First button */
   if (buttons[0].second == ButtonStatus::Active) {
     currentRenderer->SetBackground(0, 0, 0);
@@ -91,25 +94,9 @@ void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
   }
   /* Third button */
   if (buttons[2].second == ButtonStatus::Active) {
-    /* Activate slider */
-    vtkLightCollection *lights = currentRenderer->GetLights();
-    lights->InitTraversal();
-    vtkLight *light = lights->GetNextItem();
-    light->SwitchOff();
-    if (lights->GetNumberOfItems() > 1) {
-      light = lights->GetNextItem();
-      light->SwitchOff();
-    }
-
+    mainLight->SetColor(colors->GetColor3d("MainLightOn").GetData());
   } else {
-    vtkLightCollection *lights = currentRenderer->GetLights();
-    lights->InitTraversal();
-    vtkLight *light = lights->GetNextItem();
-    light->SwitchOn();
-    if (lights->GetNumberOfItems() > 1) {
-      light = lights->GetNextItem();
-      light->SwitchOff();
-    }
+    mainLight->SetColor(colors->GetColor3d("MainLightOff").GetData());
     /* Block slider */
   }
 }

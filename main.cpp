@@ -10,16 +10,15 @@
 
 #include <vtkCamera.h>
 #include <vtkCubeSource.h>
+#include <vtkLight.h>
+#include <vtkLightActor.h>
+#include <vtkLightCollection.h>
 #include <vtkPlaneSource.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
-#include <vtkLight.h>
-#include <vtkLightActor.h>
-#include <vtkLightCollection.h>
-
 
 vtkStandardNewMacro(CustomMouseInteractorStyle);
 
@@ -59,13 +58,13 @@ int main(int argc, char *argv[]) {
   renderer->SetBackground(255, 255, 255);
 
   /************* Creating lighting ******************/
-  vtkNew<vtkLight> MainLight;
-  MainLight->SetPosition(actorsVector[12]->GetPosition()[0],10000, actorsVector[12]->GetPosition()[2]);
-  MainLight->SetFocalPoint(actorsVector[12]->GetPosition());
-  MainLight->SetColor(colorsVector[13].GetData());
-  MainLight->SwitchOn();
-  renderer->RemoveAllLights();
-  renderer->AddLight(MainLight);
+  vtkNew<vtkLight> mainLight;
+  mainLight->SetPosition(actorsVector[12]->GetPosition()[0], 10000,
+                         actorsVector[12]->GetPosition()[2]);
+  mainLight->SetFocalPoint(actorsVector[12]->GetPosition());
+  mainLight->SetColor(colorsVector[13].GetData());
+  mainLight->SwitchOn();
+  renderer->AddLight(mainLight);
 
   /************ Creating renderer window ************/
   vtkNew<vtkRenderWindow> renderWindow;
@@ -78,6 +77,7 @@ int main(int argc, char *argv[]) {
 
   /**** Creating renderer window interactor style ***/
   vtkNew<CustomMouseInteractorStyle> style;
+  style->setMainLight(mainLight);
   style->SetDefaultRenderer(renderer);
   for (auto &panelButton : panelButtonsVector) {
     style->buttons.emplace_back(std::make_pair(
