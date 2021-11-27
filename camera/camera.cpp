@@ -94,9 +94,9 @@ void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
   }
   /* Third button */
   if (buttons[2].second == ButtonStatus::Active) {
-    mainLight->SetColor(colors->GetColor3d("MainLightOn").GetData());
+    mainLight->SetIntensity(1);
   } else {
-    mainLight->SetColor(colors->GetColor3d("MainLightOff").GetData());
+    mainLight->SetIntensity(0.25);
     /* Block slider */
   }
 }

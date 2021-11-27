@@ -4,6 +4,7 @@
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkLight.h>
 #include <vtkNew.h>
+#include <vtkOpenGLRenderer.h>
 #include <vtkPropPicker.h>
 #include <vtkProperty.h>
 #include <vtkRenderWindowInteractor.h>

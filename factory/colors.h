@@ -22,7 +22,7 @@ std::vector<vtkColor3d> getColorsVector() {
   colors->SetColor("Book", "#F8F8FF");
   colors->SetColor("Pen", "#F0FFF0");
   colors->SetColor("MainLightOn", "#000000");
-  colors->SetColor("MainLightOff", "#FFFFFF");
+  colors->SetColor("MainLightOff", "#FFFF00");
 
   return {
       colors->GetColor3d("DeskColor"),    colors->GetColor3d("TrumpetColor"),

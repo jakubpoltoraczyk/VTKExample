@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vtkOBJReader.h>
 #include <vtkNew.h>
+#include <vtkOBJReader.h>
 
 #include <vector>
 
