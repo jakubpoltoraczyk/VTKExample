@@ -2,6 +2,10 @@ To-Do list in Demo project:
 - animacja: np. trąbka która przechyla się tak, aby oprzeć się na stole
 - ściany/mapa(plakat): dodanie ścian pokoju oraz na jednej z nich dołożyc plakat-mapę (format .dem)
 - poprawić panel do obsługi tła oraz dodać slider (scrollbar) z jakakolwiek funkcjonalnoscia zwiazana z tłem
+- światło: lampka zapala się ze światłem padającym na biurko - 
+    for now we can't do this cause we have to rewrite picker and renderer, if we setup lamplight it will go through every object until it reach floor,
+    to get ride of it we have to setup shadows but to do it we have to use vtkOpenGlRenderer. even if we use it and setup shadows correctly there is some bug with event or picker
+    but it's hard to determine where is bug. 
 
 Jakub:
 - dokumentacja: dodatkowe mozliwosci VTK
@@ -10,4 +14,4 @@ Jakub:
 Michał:
 - dokumentacja: proces instalacji
 - dokumentacja: opis demo projektu
-- światło: lampka zapala się ze światłem padającym na biurko
+- moving objects and add some way of saving position of objects to file and then at start of program read it from file.
