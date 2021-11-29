@@ -9,7 +9,7 @@
 
 #include <algorithm>
 
-void CustomMouseInteractorStyle::OnMouseMove() {
+void CustomInteractorStyle::OnMouseMove() {
   /* Wall visibility depends on camera position */
   if (auto currentRenderer = this->GetCurrentRenderer();
       currentRenderer != nullptr) {
@@ -20,7 +20,7 @@ void CustomMouseInteractorStyle::OnMouseMove() {
   vtkInteractorStyleTrackballCamera::OnMouseMove();
 }
 
-void CustomMouseInteractorStyle::OnLeftButtonDown() {
+void CustomInteractorStyle::OnLeftButtonDown() {
   int *clickPos = this->GetInteractor()->GetEventPosition();
   vtkNew<vtkPropPicker> picker;
   picker->Pick(clickPos[0], clickPos[1], 0, this->GetDefaultRenderer());
@@ -35,21 +35,60 @@ void CustomMouseInteractorStyle::OnLeftButtonDown() {
     customizeBackground(button);
   }
 
+  if (auto *actor = picker->GetActor();
+      interactive &&
+      std::find_if(Actors.begin(), Actors.end(), [actor](auto ActorIterator) {
+        return ActorIterator == actor;
+      }) != Actors.end()) {
+    movedActor = actor;
+    if (auto *values = movedActor->GetPosition(); values != nullptr) {
+      for (int i = 0; i < 3; ++i) {
+        newActorPosition[i] = values[i];
+      }
+    }
+  }
+
   // Forward events
   vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
 }
 
-void CustomMouseInteractorStyle::OnMiddleButtonDown() {
+void CustomInteractorStyle::OnMiddleButtonDown() {
   // Forward events
   vtkInteractorStyleTrackballCamera::OnMiddleButtonDown();
 }
 
-void CustomMouseInteractorStyle::OnRightButtonDown() {
+void CustomInteractorStyle::OnRightButtonDown() {
   // Forward events
   vtkInteractorStyleTrackballCamera::OnRightButtonDown();
 }
 
-void CustomMouseInteractorStyle::customizePanelButtons(
+void CustomInteractorStyle::OnKeyPress() {
+  vtkRenderWindowInteractor *rwi = this->Interactor;
+  std::string key = rwi->GetKeySym();
+  if (key == "t") {
+    interactive = interactive ? false : true;
+    movedActor = nullptr;
+  } else if (movedActor != nullptr) {
+    if (key == "Up") {
+      newActorPosition[1] += 10;
+    } else if (key == "Down") {
+      newActorPosition[1] -= 10;
+    } else if (key == "Right") {
+      newActorPosition[0] += 10;
+    } else if (key == "Left") {
+      newActorPosition[0] -= 10;
+    } else if (key == "i") {
+      newActorPosition[2] += 10;
+    } else if (key == "o") {
+      newActorPosition[2] -= 10;
+    }
+    movedActor->SetPosition(newActorPosition);
+  }
+  rwi->Render();
+  vtkInteractorStyleTrackballCamera::OnKeyPress();
+}
+
+void CustomInteractorStyle::customizePanelButtons(
     vtkNew<vtkPropPicker> &picker) {
   /* Colors definition */
   vtkNew<vtkNamedColors> colors;
@@ -73,7 +112,7 @@ void CustomMouseInteractorStyle::customizePanelButtons(
   }
 }
 
-void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
+void CustomInteractorStyle::customizeBackground(vtkActor *button) {
   auto *currentRenderer = this->GetCurrentRenderer();
   vtkNew<vtkNamedColors> colors;
   colors->SetColor("MainLightOn", "#FFFFFF");
@@ -101,7 +140,7 @@ void CustomMouseInteractorStyle::customizeBackground(vtkActor *button) {
   }
 }
 
-void CustomMouseInteractorStyle::changeWallsVisiblity(double cameraPosition[]) {
+void CustomInteractorStyle::changeWallsVisiblity(double cameraPosition[]) {
   std::vector<double> cameraAndWallDistances;
 
   /* Creating vector with points distance */

@@ -14,10 +14,10 @@
 #include <utility>
 #include <vector>
 
-class CustomMouseInteractorStyle : public vtkInteractorStyleTrackballCamera {
+class CustomInteractorStyle : public vtkInteractorStyleTrackballCamera {
 public:
-  static CustomMouseInteractorStyle *New();
-  vtkTypeMacro(CustomMouseInteractorStyle, vtkInteractorStyleTrackballCamera);
+  static CustomInteractorStyle *New();
+  vtkTypeMacro(CustomInteractorStyle, vtkInteractorStyleTrackballCamera);
 
   enum class ButtonStatus { Active, InActive };
 
@@ -29,8 +29,13 @@ public:
 
   void OnRightButtonDown() override;
 
+  virtual void OnKeyPress() override;
+
   std::vector<std::pair<vtkActor *, ButtonStatus>> buttons;
   std::vector<vtkActor *> walls;
+  std::vector<vtkActor *> Actors;
+  vtkActor *movedActor = nullptr;
+  double newActorPosition[3];
 
   void setMainLight(vtkLight *light) { mainLight = light; };
 
@@ -40,4 +45,5 @@ private:
   void changeWallsVisiblity(double cameraPosition[]);
 
   vtkLight *mainLight;
+  bool interactive = false;
 };
