@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "camera/camera.h"
 #include "factory/actors.h"
 #include "factory/colors.h"
@@ -20,7 +22,7 @@
 #include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
 
-vtkStandardNewMacro(CustomMouseInteractorStyle);
+vtkStandardNewMacro(CustomInteractorStyle);
 
 int main(int argc, char *argv[]) {
   /*************** Defining colors ******************/
@@ -68,20 +70,19 @@ int main(int argc, char *argv[]) {
   mainLight->PositionalOn();
   renderer->AddLight(mainLight);
 
-  /*
-    Read ToDo about lamp light
+  /* Read ToDo about lamp light
 
-    vtkNew<vtkLight> lampLight;
-    lampLight->SetPosition(actorsVector[2]->GetPosition()[0],
-                           actorsVector[2]->GetPosition()[1] + 500,
-                           actorsVector[2]->GetPosition()[2]);
-    lampLight->SetFocalPoint(actorsVector[2]->GetPosition());
-    lampLight->SetColor(colorsVector[15].GetData());
-    lampLight->SetIntensity(1);
-    lampLight->PositionalOn();
-    renderer->AddLight(lampLight);
-    std::cout << lampLight->GetLightType();
-  */
+  vtkNew<vtkLight> lampLight;
+  lampLight->SetPosition(actorsVector[2]->GetPosition()[0],
+                         actorsVector[2]->GetPosition()[1] + 500,
+                         actorsVector[2]->GetPosition()[2]);
+  lampLight->SetFocalPoint(actorsVector[2]->GetPosition());
+  lampLight->SetColor(colorsVector[15].GetData());
+  lampLight->SetIntensity(1);
+  lampLight->PositionalOn();
+  renderer->AddLight(lampLight);
+  std::cout << lampLight->GetLightType();
+*/
   /************ Creating renderer window ************/
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -92,13 +93,16 @@ int main(int argc, char *argv[]) {
   renderWindowInteractor->SetRenderWindow(renderWindow);
 
   /**** Creating renderer window interactor style ***/
-  vtkNew<CustomMouseInteractorStyle> style;
+  vtkNew<CustomInteractorStyle> style;
   style->setMainLight(mainLight);
   style->SetDefaultRenderer(renderer);
   for (auto &panelButton : panelButtonsVector) {
     style->buttons.emplace_back(std::make_pair(
-        panelButton.Get(), CustomMouseInteractorStyle::ButtonStatus::InActive));
+        panelButton.Get(), CustomInteractorStyle::ButtonStatus::InActive));
   }
+  std::transform(actorsVector.begin(), actorsVector.end(),
+                 std::back_inserter(style->Actors),
+                 [](vtkActor *a) { return a; });
   renderWindowInteractor->SetInteractorStyle(style);
 
   /********* Management of importer objects *********/
@@ -132,8 +136,6 @@ int main(int argc, char *argv[]) {
   renderWindow->SetSize(640, 480);
   renderWindow->Render();
   mainLight->SwitchOn();
-  // lampLight->SwitchOn();
-  std::cout << renderer->GetLights()->GetNumberOfItems() << std::endl;
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;
