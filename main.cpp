@@ -10,16 +10,15 @@
 
 #include <vtkCamera.h>
 #include <vtkCubeSource.h>
+#include <vtkLight.h>
+#include <vtkLightActor.h>
+#include <vtkLightCollection.h>
 #include <vtkPlaneSource.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSliderWidget.h>
 #include <vtkSphereSource.h>
-#include <vtkLight.h>
-#include <vtkLightActor.h>
-#include <vtkLightCollection.h>
-
 
 vtkStandardNewMacro(CustomMouseInteractorStyle);
 
@@ -59,14 +58,30 @@ int main(int argc, char *argv[]) {
   renderer->SetBackground(255, 255, 255);
 
   /************* Creating lighting ******************/
-  vtkNew<vtkLight> MainLight;
-  MainLight->SetPosition(actorsVector[12]->GetPosition()[0],10000, actorsVector[12]->GetPosition()[2]);
-  MainLight->SetFocalPoint(actorsVector[12]->GetPosition());
-  MainLight->SetColor(colorsVector[13].GetData());
-  MainLight->SwitchOn();
-  renderer->RemoveAllLights();
-  renderer->AddLight(MainLight);
 
+  vtkNew<vtkLight> mainLight;
+  mainLight->SetPosition(actorsVector[12]->GetPosition()[0], 10000,
+                         actorsVector[12]->GetPosition()[2]);
+  mainLight->SetFocalPoint(actorsVector[12]->GetPosition());
+  mainLight->SetColor(colorsVector[15].GetData());
+  mainLight->SetIntensity(0.25);
+  mainLight->PositionalOn();
+  renderer->AddLight(mainLight);
+
+  /*
+    Read ToDo about lamp light
+
+    vtkNew<vtkLight> lampLight;
+    lampLight->SetPosition(actorsVector[2]->GetPosition()[0],
+                           actorsVector[2]->GetPosition()[1] + 500,
+                           actorsVector[2]->GetPosition()[2]);
+    lampLight->SetFocalPoint(actorsVector[2]->GetPosition());
+    lampLight->SetColor(colorsVector[15].GetData());
+    lampLight->SetIntensity(1);
+    lampLight->PositionalOn();
+    renderer->AddLight(lampLight);
+    std::cout << lampLight->GetLightType();
+  */
   /************ Creating renderer window ************/
   vtkNew<vtkRenderWindow> renderWindow;
   renderWindow->AddRenderer(renderer);
@@ -78,6 +93,7 @@ int main(int argc, char *argv[]) {
 
   /**** Creating renderer window interactor style ***/
   vtkNew<CustomMouseInteractorStyle> style;
+  style->setMainLight(mainLight);
   style->SetDefaultRenderer(renderer);
   for (auto &panelButton : panelButtonsVector) {
     style->buttons.emplace_back(std::make_pair(
@@ -98,7 +114,6 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < otherActorsSize; ++i) {
     actors->GetNextActor();
   }
-
   int importerActorsSize = actors->GetNumberOfItems() - otherActorsSize;
   customizeImporterObjectsPositions(actorsVector[0], actors,
                                     importerActorsSize);
@@ -116,7 +131,9 @@ int main(int argc, char *argv[]) {
   /************** Final preparations ***************/
   renderWindow->SetSize(640, 480);
   renderWindow->Render();
-
+  mainLight->SwitchOn();
+  // lampLight->SwitchOn();
+  std::cout << renderer->GetLights()->GetNumberOfItems() << std::endl;
   renderWindowInteractor->Start();
 
   return EXIT_SUCCESS;
